@@ -6,7 +6,21 @@ The C4 Model help the process to visualize Software architecture.
 - Containers
 - Components
 
-# Supported C4 Model Diagram Types
+## Example 1
+
+**Context**
+
+![](c4_model_l0.png)
+
+**Containers**
+
+![](c4_model_l1.png)
+
+**Component**
+
+![](c4_model_l2.png)
+
+## Supported C4 Model Diagram Types
 
 - System Context & System Landscape diagrams
   - Import: !includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0/C4_Context.puml

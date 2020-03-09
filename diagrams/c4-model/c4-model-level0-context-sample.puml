@@ -4,9 +4,9 @@
 ' Dependencies
 !includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Context.puml
 
-title System Landscape diagram for Big company
+title System Landscape diagram about a Big company
 
-LAYOUT_LEFT_RIGHT
+'LAYOUT_LEFT_RIGHT
 
 Person(customer, "Customer")
 
@@ -15,7 +15,7 @@ Enterprise_Boundary(c0, "Big company") {
 
     System_Ext(mainframe, "Mainframe System", "Manage legacy operations")
 
-    Rel(api, mainframe, "Uses" , "JSON/HTTPS")
+    Rel(api, mainframe, "Uses" , "XML/HTTPS")
 }
 
 Rel(customer, api, "Uses", "JSON/HTTPS")
