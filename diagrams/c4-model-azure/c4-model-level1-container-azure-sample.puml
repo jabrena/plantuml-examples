@@ -1,0 +1,30 @@
+@startuml C4 model / System Container diagrama
+!pragma revision 1
+
+' Dependencies
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Container.puml
+
+title Container diagram about the Internet System
+
+'LAYOUT_LEFT_RIGHT
+
+Person(customer, "Customer")
+System(device, "Withings Scale", "Sync weight with the system")
+
+System_Boundary(c1, "Internet System") {
+    Container(web_app, "Web Application", "React/Node.js", "Front-end")
+    Container(mobile_app, "Mobile App", "Android, IOS", "Native application")
+    Container(backend_api, "API Application", "Java 11, Spring Boot, Spring Cloud", "Provides Internet functionality via API")
+    ContainerDb(db, "Database", "Relational Database")
+}
+
+Rel(customer, web_app,"Uses", "JSON/HTTPS")
+Rel(customer, mobile_app, "Uses", "JSON/HTTPS")
+
+Rel(web_app, backend_api, "Uses", "JSON/HTTPS")
+Rel(mobile_app, backend_api, "Uses", "JSON/HTTPS")
+Rel(backend_api, db, "Uses", "JDBC")
+
+Rel(device, backend_api, "Use", "JSON/HTTPS")
+
+@enduml

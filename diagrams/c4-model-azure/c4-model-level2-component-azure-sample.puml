@@ -1,0 +1,50 @@
+@startuml C4 model / System Container diagrama
+!pragma revision 1
+
+' Dependencies
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+!define AzurePuml https://raw.githubusercontent.com/RicardoNiepel/Azure-PlantUML/master/dist
+!includeurl AzurePuml/AzureCommon.puml
+!includeurl AzurePuml/InternetOfThings/AzureIoTHub.puml
+!includeurl AzurePuml/Compute/AzureFunction.puml
+
+title Component diagram about the Internet System
+
+LAYOUT_LEFT_RIGHT
+
+Container(web_app, "Web Application", "React/Node.js", "Front-end")
+Container(mobile_app, "Mobile App", "Android, IOS", "Native application")
+System(device, "Withings Scale", "Sync weight with the system")
+
+System_Boundary(c2, "API Application") {
+
+    AzureIoTHub(iotHub, "IoT Hub", "Standard S1", "Ingress point for all telemetry, using built-in IoT Hub Routes for routing")
+    AzureFunction(authenticationFunction, "Authentication", "Authentication, Java")
+    AzureFunction(adapterFunction, "Adapter", "Adapter, Java")
+
+    Component(component1, "Component One", "Java 11, Spring Boot, Spring Cloud", "Provides customers features about Component One")
+    Component(component2, "Component Two", "Java 11, Spring Boot, Spring Cloud", "Provides customers features about Component Two")
+    Component(security, "Security Component", "UAM", "Provides functionality related to singing in, changing passwords, etc.")
+    ContainerDb(db_security, "Security Database", "Relational Database Schema", "Stores user registration information, hashed authentication credentials, access logs, etc.")
+    ContainerDb(db_component2, "Component 2 Database", "Relational Database Schema", "Data about Component 2")
+
+    Rel(security, db_security, "Uses", "JDBC")
+    Rel(component2, db_component2, "Uses", "JDBC")
+
+}
+
+Rel(web_app, security, "Uses", "JSON/HTTPS")
+Rel(mobile_app, security, "Uses", "JSON/HTTPS")
+
+Rel(web_app, component1, "Uses", "JSON/HTTPS")
+Rel(mobile_app, component1, "Uses", "JSON/HTTPS")
+
+Rel(web_app, component2, "Uses", "JSON/HTTPS")
+Rel(mobile_app, component2, "Uses", "JSON/HTTPS")
+
+Rel(device, iotHub, "Use", "JSON/HTTPS")
+Rel(iotHub, adapterFunction, "Use", "JSON/HTTPS")
+Rel(adapterFunction, authenticationFunction, "Use", "JSON/HTTPS")
+Rel(authenticationFunction, security, "Use", "JSON/HTTPS")
+
+@enduml

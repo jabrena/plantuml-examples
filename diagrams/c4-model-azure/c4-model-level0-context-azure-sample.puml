@@ -1,0 +1,23 @@
+@startuml C4 model / System Context diagrama
+!pragma revision 1
+
+' Dependencies
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Context.puml
+
+title System Landscape diagram about a Withings (Example)
+
+'LAYOUT_LEFT_RIGHT
+
+Person(customer, "Customer")
+System(device, "Withings Scale", "Sync weight with the system")
+'System_Ext(device, "Withings Scale", "Sync weight with the system")
+
+Enterprise_Boundary(c0, "Withings company") {
+    System(api, "Internet System", "Allows customers to interact with some Operations from the organization.")
+
+}
+
+Rel(customer, api, "Uses", "JSON/HTTPS")
+Rel(device, api, "Use", "JSON/HTTPS")
+
+@enduml
