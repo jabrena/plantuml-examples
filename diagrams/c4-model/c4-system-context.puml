@@ -1,0 +1,23 @@
+@startuml C4 model / System Context diagrama
+!pragma revision 1
+
+' Dependencies
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Context.puml
+
+title System Landscape diagram for Big company
+
+LAYOUT_LEFT_RIGHT
+
+Person(customer, "Customer")
+
+Enterprise_Boundary(c0, "Big company") {
+    System(api, "Internet System", "Allows customers to interact with some Operations from the organization.")
+
+    System_Ext(mainframe, "Mainframe System", "Manage legacy operations")
+
+    Rel(api, mainframe, "Uses" , "JSON/HTTPS")
+}
+
+Rel(customer, api, "Uses", "JSON/HTTPS")
+
+@enduml
